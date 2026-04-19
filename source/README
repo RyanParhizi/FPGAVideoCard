@@ -1,0 +1,27 @@
+Part 1:
+1. Go to the Digilent Vivado Library on GitHub: https://github.com/Digilent/vivado-library
+2. Click the green Code button and select Download ZIP.
+3. Extract the ZIP file on your local computer.
+4. Move the extracted folder to a permanent, easy-to-find location. (Putting it directly inside your main Vivado project folder and renaming it to ip_repo makes it easy to find).
+
+Part 2:
+1. Open your project in Vivado.
+2. On the left side of the screen in the Flow Navigator, click the Settings gear icon (or go to Tools > Settings in the top menu).
+3. In the Settings window, expand the IP category on the left pane and click on Repository.
+4. Click the + (Plus) button to add a new repository.
+5. Browse to the ip_repo folder you extracted in Part 1, select it, and click Select.
+6. A small window will pop up showing the number of IPs Vivado found inside that folder. Click OK, then click Apply and OK to close the Settings window
+
+Part 3:
+1. Click Add Sources in the Flow Navigator.
+2. Select Add Existing IP and browse to the .xci files provided in this repository (e.g., rgb2dvi_0.xci and clk_wiz_0.xci). Click Finish.
+3. In the Sources pane, expand the IP Sources or Hierarchy tab. You should see the custom IPs listed.
+4. Right-click the IPs and select Generate Output Products.
+5. Leave the settings default in the pop-up window and click Generate. Vivado will take a few moments to build the background files for the IP.
+
+Part 4:
+1. Click Add Sources in the Flow Navigator.
+2. Select Add or create design sources and click Next.
+3. Click Add Files and select the provided DisplayHDMI.v file (and your image module Verilog files). Click Finish.
+4. Click Add Sources again, select Add or create constraints, and click Next.
+5. Click Add Files and select the BooleanBoard.xdc file to ensure the physical pins are mapped correctly.
