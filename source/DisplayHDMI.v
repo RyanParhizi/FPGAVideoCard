@@ -81,5 +81,24 @@ module DisplayHDMI(
     assign blue = video ? 8'hFF : 8'd0;
     
     wire [23:0] rgbData = {red, green, blue};
+    
+    rgb2dvi_0 rgb2dvi (
+        // HDMI Outputs
+        .TMDS_Clk_p(hdmi_clk_p),
+        .TMDS_Clk_n(hdmi_clk_n),
+        .TMDS_Data_p(hdmi_tx_p),
+        .TMDS_Data_n(hdmi_tx_n),
+        
+        // Video Signals
+        .vid_pData(rgbData),
+        .vid_pVDE(video),
+        .vid_pHSync(Hsync),
+        .vid_pVSync(Vsync),
+        
+        // Clocks and Resets
+        .PixelClk(pixelClock),
+        .SerialClk(serialClock),
+        .aRst(1'b0)
+    );
    
 endmodule
