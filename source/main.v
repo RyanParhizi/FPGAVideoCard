@@ -23,14 +23,10 @@ module UART_HDMI_Gray(
         .valid(rx_valid)
     );
 
-    always @(posedge clk) begin
-        if (rx_valid)
-            gray_value <= rx_data;
-    end
-
     DisplayHDMI hdmi_inst (
         .clk(clk),
-        .gray(gray_value),
+        .rx_data(rx_data),
+        .rx_valid(rx_valid),
         .hdmi_clk_p(hdmi_clk_p),
         .hdmi_clk_n(hdmi_clk_n),
         .hdmi_tx_p(hdmi_tx_p),

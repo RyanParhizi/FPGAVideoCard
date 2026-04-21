@@ -12,17 +12,19 @@ port = sys.argv[1]
 image_file = sys.argv[2]
 
 # Load image and convert to grayscale
-img = Image.open(image_file).convert("L")
+img = Image.open(image_file).resize((320, 240)).convert("L")
 
+pixel_data = bytearray(img.getdata())
 # Compute average brightness 0..255
-pixels = list(img.getdata())
-avg_gray = sum(pixels) // len(pixels)
+#pixels = list(img.getdata())
+#avg_gray = sum(pixels) // len(pixels)
 
-print(f"Sending grayscale value: {avg_gray}")
+print(f"Sending {len(pixel_data)} bytes over UART at 115200 baud...")
+print("Look at the monitor, this will likely take 6 seconds.")
 
 # Send one byte to FPGA
 ser = serial.Serial(port, 115200)
-ser.write(bytes([avg_gray]))
+ser.write(pixel_data)
 ser.close()
 
 #run with python streaming.py port myimage.png
