@@ -1,0 +1,51 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+myproject-env/
+
+# Python cache / compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# macOS
+.DS_Store
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# Python tooling
+.pytest_cache/
+.mypy_cache/
+
+# Build / output files
+dist/
+build/
+
+# Logs
+*.log
+
+# FPGA / Vivado generated files
+*.jou
+*.log
+*.str
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.gen/
+*.Xil/
+*.tmp/
+
+# Bitstreams / reports if you don't want generated outputs tracked
+*.bit
+*.bin
+*.ltx
+
+# Optional: waveform / simulation dumps
+*.vcd
+*.wdb
