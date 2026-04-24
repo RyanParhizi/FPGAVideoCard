@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Course: Digital Logic
-// Engineer: Aidan Penders (aipe5108)
+// Engineer(s): Aidan Penders (aipe5108)
 //
 // Module Name: DisplayHDMI
 // Project Name: FPGA Video Card

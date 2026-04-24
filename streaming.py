@@ -1,6 +1,6 @@
 ##################################################################################
 # Course: Digital Logic
-# Engineer: Ryan Parhizi
+# Engineer(s): Ryan Parhizi (rypa)
 #
 # Module Name: streaming
 # Project Name: FPGA Video Card

@@ -1,10 +1,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Course: Digital Logic
-// Engineer: Aidan Penders (aipe5108) and Ryan Parhizi ()
+// Engineer(s): Ryan Parhizi (rypa) and Aidan Penders (aipe5108)
 //
 // Module Name: main
 // Project Name: FPGA Video Card
-// Description:             
+// Description: Top-level module for out FPGA Video Card project. Wires the UART receiver module to the HDMI display controller.
 //////////////////////////////////////////////////////////////////////////////////
 
 // Top-level module integrating UART and HDMI display
@@ -16,13 +16,11 @@ module UART_HDMI_Gray(
     output wire [2:0] hdmi_tx_p,
     output wire [2:0] hdmi_tx_n
 );
-
-    reg [7:0] gray_value = 8'h00;
-
+    // Wires linking the UART receiver to the HDMI display controller
     wire [7:0] rx_data;
     wire rx_valid;
 
-    // Call UART module
+    // Deserializes the incoming serial stream into 8-bit parallel bytes
     uart #(
         .CLK_FREQ(100_000_000),
         .BAUD_RATE(115200)
@@ -33,7 +31,7 @@ module UART_HDMI_Gray(
         .valid(rx_valid)
     );
 
-    // Call DisplayHDMI module
+    // Receives the pixel bytes, stores them in BRAM, and generates the active HDMI signal
     DisplayHDMI hdmi_inst (
         .clk(clk),
         .rx_data(rx_data),
