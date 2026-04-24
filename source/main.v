@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Course: Digital Logic
-// Engineer(s): Ryan Parhizi (rypa) and Aidan Penders (aipe5108)
+// Engineer(s): Ryan Parhizi (rypa7834) and Aidan Penders (aipe5108)
 //
 // Module Name: main
 // Project Name: FPGA Video Card

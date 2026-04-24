@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Course: Digital Logic
-// Engineer(s): Ryan Parhizi (rypa)
+// Engineer(s): Ryan Parhizi (rypa7834)
 //  
 // Module Name: uart
 // Project Name: FPGA Video Card
