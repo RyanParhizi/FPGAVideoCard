@@ -1,9 +1,18 @@
-from os import replace
+##################################################################################
+# Course: Digital Logic
+# Engineer: Ryan Parhizi
+#
+# Module Name: streaming
+# Project Name: FPGA Video Card
+# Description: Prepares an image by resizing it to 320x240 resolution and converting to an 8-bit grayscale.
+#              Then transmits image data from a host PC to a boolean board via UART. 
+##################################################################################
 
 from PIL import Image
 import serial
 import sys
 
+# Check to make sure command line used the proper serial port and image file location/name
 if len(sys.argv) != 3:
     print("Usage: python3 send_image_gray.py <serial_port> <image_file>")
     sys.exit(1)
@@ -11,24 +20,22 @@ if len(sys.argv) != 3:
 port = sys.argv[1]
 image_file = sys.argv[2]
 
-# Load image and convert to grayscale
+# Load the image, resize it to 320x240, convert it to grayscale so each pixel can be represented by a single byte (0-255)
 img = Image.open(image_file).resize((320, 240)).convert("L")
 
+# Make the image into a bytearray so that it can be easily transferred over UART
 pixel_data = bytearray(img.getdata())
-# Compute average brightness 0..255
-#pixels = list(img.getdata())
-#avg_gray = sum(pixels) // len(pixels)
 
 print(f"Sending {len(pixel_data)} bytes over UART at 115200 baud...")
-print("Look at the monitor, this will likely take 6 seconds.")
 
-# Send one byte to FPGA
+# Create a serial connection at 115200 bits per second
 ser = serial.Serial(port, 115200)
+
+# Send the entire pixel data byte array through UART then close the serial connection
 ser.write(pixel_data)
 ser.close()
 
-#run with python streaming.py port myimage.png
-
+# To Run:
 # finding a port (windows)
 # Plug in your device to the USB-C port.
 # Open Device Manager (press Win+X, then choose Device Manager).

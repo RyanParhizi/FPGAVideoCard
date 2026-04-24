@@ -1,24 +1,14 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Course: Digital Logic
-// Engineer: Aidan Penders
-// 
-// Create Date: 04/14/2026 04:48:34 PM
-// Design Name: 
+// Engineer: Aidan Penders (aipe5108)
+//
 // Module Name: DisplayHDMI
-// Project Name: HDMI Display Image Streaming
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
+// Project Name: FPGA Video Card
+// Description: Takes in the 8-bit UART pixel data and stores it into the BRAM acting as a framebuffer.
+//              Whilst simultaneously generating clock timings and a 2x upscaled 640x480 image to fill the screen.
+// IP Used: AMD/Vivado's Clocking Wizard and Digilent's rgb2dvi
 //////////////////////////////////////////////////////////////////////////////////
-
 
 module DisplayHDMI(
     input wire clk,
@@ -32,7 +22,7 @@ module DisplayHDMI(
     
     wire pixelClock; // Clock used to determine the color of 1 pixel
     wire serialClock; // Clock used to send data over the HDMI cable to the monitor
-    wire locked;
+    wire locked; // High when Clock Wizard is stablized
     
     // Clock Generation with Clock Wizard
     clk_wiz_0 clockWizard (
@@ -58,7 +48,7 @@ module DisplayHDMI(
         end
     end
     
-    // HDMI Timing Parameters
+    // HDMI Timing Parameters - 640x480 @ 60Hz Timing
     parameter hDisplay = 640; // Active Horizontal Pixels
     parameter hFront = 16; // Horizontal Front Porch - Ensures the signal is processed correctly
     parameter hSync = 96; // Horizontal Sync Pulse Width
@@ -75,7 +65,7 @@ module DisplayHDMI(
     reg [9:0] vCount = 0; // Defines the current vertical position
     wire Hsync, Vsync, video;
     
-    // Sync Generator
+    // Tracks the current pixel position on the screen
     always @(posedge pixelClock) begin
         if (hCount == hTotal - 1) begin
             hCount <= 0;
@@ -95,16 +85,19 @@ module DisplayHDMI(
     assign Hsync = ~((hCount >= hDisplay + hFront) && (hCount < hDisplay + hFront + hSync));
     assign Vsync = ~((vCount >= vDisplay + vFront) && (vCount < vDisplay + vFront + vSync));
     
+    // Upscale from 320x240 to 640x480 by shifting 1 rightward effectively halving the coordinates which doubles the pixel count
     wire [16:0] readAddress = (vCount[9:1] * 320) + hCount[9:1];
     reg [7:0] grayPixel;
     
+    // Read pixel data from BRAM during active video sections
     always @(posedge pixelClock) begin
         if (video)
             grayPixel <= frameBuffer[readAddress];
         else
             grayPixel <= 8'h00;
     end
-    
+
+    // Pipeline video registers to sync with pixel data
     reg regVideo, regHsync, regVsync;
     always @(posedge pixelClock) begin
         regVideo <= video;
@@ -112,6 +105,7 @@ module DisplayHDMI(
         regVsync <= Vsync;
     end
     
+    // Convert the 8-bit grayscale value to 24-bit RGB (R=G=B makes grey)
     wire [7:0] red = regVideo ? grayPixel : 8'd0;
     wire [7:0] green = regVideo ? grayPixel : 8'd0;
     wire [7:0] blue = regVideo ? grayPixel : 8'd0;

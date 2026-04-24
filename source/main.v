@@ -1,3 +1,12 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Course: Digital Logic
+// Engineer: Aidan Penders (aipe5108) and Ryan Parhizi ()
+//
+// Module Name: main
+// Project Name: FPGA Video Card
+// Description:             
+//////////////////////////////////////////////////////////////////////////////////
+
 // Top-level module integrating UART and HDMI display
 module UART_HDMI_Gray(
     input  wire clk,
@@ -13,7 +22,8 @@ module UART_HDMI_Gray(
     wire [7:0] rx_data;
     wire rx_valid;
 
-    uart_rx #(
+    // Call UART module
+    uart #(
         .CLK_FREQ(100_000_000),
         .BAUD_RATE(115200)
     ) uart_inst (
@@ -23,6 +33,7 @@ module UART_HDMI_Gray(
         .valid(rx_valid)
     );
 
+    // Call DisplayHDMI module
     DisplayHDMI hdmi_inst (
         .clk(clk),
         .rx_data(rx_data),
