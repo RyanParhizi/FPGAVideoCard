@@ -45,6 +45,6 @@ Step #3 Running the Project:
     * Windows: Open Device Manager, expand "Ports", and note your USB Serial Device (e.g. COM4).
     * Mac/Linux: Run ls /deb/tty.* or ls /dev/ttyUSB* in the terminal to find your port (e.g. /dev/ttyUSB0).
 2. Run the Streaming Script:
-    * In the VS Code terminal, execute the following scripts using your COM port:
-        - python streaming.py <Your COM Port Here> images/cu-logo-2.jpg
-        - python streaming.py <Your COM Port Here> images/F-22.jpg
+    * In the VS Code terminal, execute the following scripts using your own COM port instead of COM4:
+        - python streaming.py COM4 images/cu-logo-2.jpg
+        - python streaming.py COM4 images/F-22.jpg
