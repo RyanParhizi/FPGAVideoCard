@@ -16,6 +16,3 @@ pip install -r requirements_env.txt
 
 echo "Setup complete."
 echo "Run: source ${VENV_DIR}/bin/activate"
-
-#run bash setup_env.sh to set up the venv and install dependencies. 
-#After that, you can activate the virtual environment with: source .venv/bin/activate

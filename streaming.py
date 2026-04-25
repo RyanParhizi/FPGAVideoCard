@@ -34,12 +34,3 @@ ser = serial.Serial(port, 115200)
 # Send the entire pixel data byte array through UART then close the serial connection
 ser.write(pixel_data)
 ser.close()
-
-# To Run:
-# finding a port (windows)
-# Plug in your device to the USB-C port.
-# Open Device Manager (press Win+X, then choose Device Manager).
-# Expand the "Ports (COM & LPT)" section.
-# Look for something like "USB Serial Device (COM4)" — the number (e.g., COM4) is your serial port.
-# You would then run your script like this (replace COM4 with your actual port):
-# Python streaming.py COM4 replace_With_path_to_image.jpg
